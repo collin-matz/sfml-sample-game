@@ -1,8 +1,7 @@
-cmake_minimum_required(VERSION 3.28)
-project(CMakeSFMLProject LANGUAGES CXX)
+cmake_minimum_required(VERSION 3.26)
+project(SFMLSampleGame VERSION 0.1.0 LANGUAGES CXX)
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-
+# pull in SFML library from github repo
 include(FetchContent)
 FetchContent_Declare(SFML
     GIT_REPOSITORY https://github.com/SFML/SFML.git
@@ -12,6 +11,8 @@ FetchContent_Declare(SFML
     SYSTEM)
 FetchContent_MakeAvailable(SFML)
 
-add_executable(main src/main.cpp)
-target_compile_features(main PRIVATE cxx_std_17)
-target_link_libraries(main PRIVATE SFML::Graphics)
+add_executable(SFMLSampleGame src/main.cpp)
+target_compile_features(SFMLSampleGame PRIVATE cxx_std_17)
+target_link_libraries(SFMLSampleGame sfml-graphics)
+
+set_property(TARGET SFMLSampleGame PROPERTY CXX_STANDARD 17)
