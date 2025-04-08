@@ -19,6 +19,7 @@ add_executable(SFMLSampleGame src/main.cpp)
 
 target_compile_features(SFMLSampleGame PRIVATE cxx_std_17)
 
+# add linked libraries
 target_link_libraries(SFMLSampleGame 
     sfml-graphics 
     sfml-window 

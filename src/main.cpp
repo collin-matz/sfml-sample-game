@@ -5,33 +5,42 @@
 int main()
 {
     // initialize a new window and cap the fps to 60
-    sf::Window window = sf::RenderWindow(sf::VideoMode({1000u, 600u}), "SFMLSampleGame");
+    sf::RenderWindow window = sf::RenderWindow(sf::VideoMode({1000u, 600u}), "SFML/OpenGL Game");
     window.setFramerateLimit(60);
 
+    // activate the window. windows in SFML come with a built in OpenGL context, so calling
+    // window.setActive(true) enables the OpenGL context, allowing you to call OpenGL functions
+    window.setActive(true);
+
     // run the program as long as the window is open
-    while (window.isOpen())
+    bool running = true;
+    while (running)
     {
         while (const std::optional event = window.pollEvent())
         {
             if (event->is<sf::Event::Closed>())
             {
-                window.close();
+                // terminate the program if the window is closed
+                running = false;
+            }
+            else if (const sf::Event::Resized* resized = event->getIf<sf::Event::Resized>())
+            {
+                // adjust the viewport when the window is resized
+                glViewport(0, 0, resized->size.x, resized->size.y);
             }
         }
 
-        // clear contents of the window here
-        // window.clear(sf::Color::Black);
+        // clear window
+        window.clear(sf::Color::Black);
 
         // draw the current frame
-        
-        // try to draw a triangle with OpenGL
-        float vertices[] = {
-            -0.5f, -0.5f, 0.0f,
-            0.5f, -0.5f, 0.0f,
-            0.0f, 0.5f, 0.0f
-        };
+        sf::CircleShape shape(50.f);
+        shape.setFillColor(sf::Color(100, 250, 50));
+        window.draw(shape);
 
-        // end the current frame
+        // put renderings to the screen and end frame
         window.display();
     }
+
+    // release resources
 }
